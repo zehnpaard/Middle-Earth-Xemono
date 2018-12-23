@@ -33,3 +33,22 @@ sum_if_true' test first second:
 
 sum_if_true (test :: int -> bool) (x :: int) (y :: int) :: int :
   (if test x then x else 0) + (if test y then y else 0)
+
+first_if_true test x y:
+  if test x then x else y
+
+long_string s:
+  String.length s > 6
+
+first_if_true long_string "short" "loooooong"
+
+big_number x: x > 3
+
+first_if_true big_number 4 3
+
+// Tuples
+
+a_tuple = (3, "three")
+another_tuple = (3, "four", 5.)
+
+(x, y) = a_tuple
