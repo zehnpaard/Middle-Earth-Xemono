@@ -20,11 +20,13 @@ ratio x y:
   Float.of_int x /. Float.of_int y
 
 sum_if_true test first second:
-  x = if test first: first
-  else: 0
+  x = cond:
+    test first: first
+    else: 0
 
-  y = if test second: second
-  else: 0
+  y = cond:
+    test second: second
+    else: 0
 
   x + y
 
@@ -84,7 +86,7 @@ recursive: destutter list:
     [] : []
     [hd] : [hd]
     hd1 & hd2 & tl :
-      if hd1 = h2:
-        destutter (hd2 & tl)
-      else:
-        h1 & destutter (hd2 & tl)
+      cond:
+        hd1 = h2: destutter (hd2 & tl)
+        else: h1 & destutter (hd2 & tl)
+
