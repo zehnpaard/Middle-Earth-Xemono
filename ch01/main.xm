@@ -109,4 +109,36 @@ log_entry maybe_time message:
     None: Time.now ()
   Time.to_sec_string time ^ " -- " ^ message // if only modular implicits...
 
+// Records
 
+record type point2d:
+  x :: float
+  y :: float
+
+// alternatively
+
+type point2d:  { x :: float, y :: float}
+
+p = { x : 3., y : -4. }
+
+magnitude { x : x_pos, y : y_pos } :
+  sqrt ( x_pos ** 2. +. y_pos ** 2.)
+
+magnitude {x, y}:
+  sqrt (x ** 2. +. y ** 2.)
+
+distance v1 v2:
+  magnitude { x : v1.x - v2.x, y : v1.y - v2.y }
+
+record type circle_desc:
+  center :: point2d
+  radius :: float
+
+record type rect_desc:
+  lower_left :: point2d
+  width :: float
+  height :: float
+
+record type segment_desc:
+  endpoint1 :: point2d
+  endpoint2 :: point2d
