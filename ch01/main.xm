@@ -90,3 +90,23 @@ recursive: destutter list:
         hd1 = h2: destutter (hd2 & tl)
         else: h1 & destutter (hd2 & tl)
 
+
+//Options
+
+divide x y:
+  if y == 0 then None else Some (x / y)
+
+// alternatively
+
+divide x y:
+  cond:
+    y == 0: None
+    else: Some (x / y)
+
+log_entry maybe_time message:
+  time = match maybe_time:
+    Some x: x
+    None: Time.now ()
+  Time.to_sec_string time ^ " -- " ^ message // if only modular implicits...
+
+
