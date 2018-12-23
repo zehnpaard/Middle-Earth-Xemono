@@ -142,3 +142,22 @@ record type rect_desc:
 record type segment_desc:
   endpoint1 :: point2d
   endpoint2 :: point2d
+
+// Variants
+
+type scene_element:
+  Circle circle_desc
+  Rect rect_desc
+  Segment segment_desc
+
+is_inside_scene_element point scene_element:
+  match scene_element:
+    Circle { center, radius }:
+      distance center point < radius
+    Rect { lower_left, width, height }:
+      point.x > lower_left.x && point.x < lower_left.x +. width \
+      && point.y > lower_left.y && point.y < lower_left.y +. height
+    Segment { endpoint1, endpoint2 }: false
+
+is_inside_scene point scene:
+  List.exists scene (~f=function el: is_inside_scene_element point el)
