@@ -161,3 +161,29 @@ is_inside_scene_element point scene_element:
 
 is_inside_scene point scene:
   List.exists scene (~f=function el: is_inside_scene_element point el)
+
+// Arrays
+numbers = [| 1, 2, 3, 4 |]
+numbers.(2) <- 4 // if only modular implicits, we will have numbers[2] <- 4
+
+// Mutable Records
+record type running_sum:
+  mutable sum :: float
+  mutable sum_sq :: float
+  mutable samples :: int
+
+// alternatively
+type running_sum: { mutable sum :: float, ...}
+
+mean rsum:
+  rsum.sum /. float rsum.samples
+
+stdev rsum:
+  sqrt (   rsum.sum_sq /. float rsum.samples
+        -. (rsum.sum /. float rsum.samples) ** 2.) // Indentation ignored inside parens
+
+create (): { sum:0., sum_sq:0., samples=0 }
+update rsum x:
+  rsum.samples <- rsum.samples + 1
+  rsum.sum <- rsum.sum +. x
+  rsum.sum_sq <- rsum.sum_sq +. x *. x
