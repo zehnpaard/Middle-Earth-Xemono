@@ -71,3 +71,20 @@ my_favorite_language languages:
   match languages:
     first & the_rest: first
     [] : "OCaml"
+
+recursive: sum l:
+  match l:
+    [] : 0
+    hd & tl : hd + sum tl
+
+sum [1, 2, 3]
+
+recursive: destutter list:
+  match list:
+    [] : []
+    [hd] : [hd]
+    hd1 & hd2 & tl :
+      if hd1 = h2:
+        destutter (hd2 & tl)
+      else:
+        h1 & destutter (hd2 & tl)
