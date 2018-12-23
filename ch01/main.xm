@@ -52,3 +52,22 @@ a_tuple = (3, "three")
 another_tuple = (3, "four", 5.)
 
 (x, y) = a_tuple
+
+// Lists
+
+languages = ["OCaml", "Perl", "C", "Xemono"]
+List.length languages
+List.map languages ~f=String.length
+[1, 2, 3]
+1 & (2 & (3 & []))
+1 & 2 & 3 & []
+
+[1, 2, 3] ++ [4, 5, 6] // If only we had modular implicits...
+
+my_favorite_language (my_favorite & the_rest):
+  my_favorite
+
+my_favorite_language languages:
+  match languages:
+    first & the_rest: first
+    [] : "OCaml"
