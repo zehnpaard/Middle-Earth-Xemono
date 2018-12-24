@@ -243,3 +243,16 @@ find_first_negative_entry array: // Possible out-of-bounds error
   do:
     pos := !pos + 1
   if !pos = Array.length array then None else Some !pos
+
+// Standalone program
+
+open Core.Std
+
+recursive: read_and_accumulate accum:
+  line = In_channel.input_line In_channel.stdin
+  match line:
+    None: accum
+    Some x: read_and_accumulate (accum +. Float.of_string x)
+
+main ():
+  printf "Total: %F\n" (read_and_accumulate 0.)
