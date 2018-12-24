@@ -212,3 +212,34 @@ sum list:
   s = ref 0
   List.iter list ~f=(function x: s := !s + x)
   !s
+
+// For/While
+
+permute array:
+  length = Array.length array
+  for i = 0 to length - 2:
+    j = i + 1 + Random.int (length - i - 1)
+    tmp = array.(i)
+    array.(i) <- array.(j)
+    array.(j) <- tmp
+
+ar = Array.init 20 ~f=(function i: i)
+permute ar
+
+find_first_negative_entry array:
+  pos = ref 0
+  while:
+    !pos < Array.length array && array.(!pos) >= 0
+  do:
+    pos := !pos + 1
+  if !pos == Array.length array then None else Some !pos
+
+find_first_negative_entry array: // Possible out-of-bounds error
+  pos = ref 0
+  while:
+    pos_is_good = !pos < Array.length array
+    element_is_non_negative = array.(!pos) >= 0
+    pos_is_good && element_is_non_negative
+  do:
+    pos := !pos + 1
+  if !pos = Array.length array then None else Some !pos
