@@ -187,3 +187,28 @@ update rsum x:
   rsum.samples <- rsum.samples + 1
   rsum.sum <- rsum.sum +. x
   rsum.sum_sq <- rsum.sum_sq +. x *. x
+
+// Refs
+
+x = { contents: 0 }
+x.contents <- x.contents + 1
+
+x = ref 0
+!x
+x := !x + 1
+!x
+
+type 'a ref:
+  mutable contents :: 'a
+
+ref x:
+  { contents : x }
+(!) r:
+  r.contents
+(:=) r x:
+  r.contents <- x
+
+sum list:
+  s = ref 0
+  List.iter list ~f=(function x: s := !s + x)
+  !s
