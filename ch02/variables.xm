@@ -146,3 +146,41 @@ divide ~first ~second:
   first / second
 
 // divide can be used with apply_to_tuple but not apply_to_tuple2
+
+// Optional Arguments
+
+concat ?sep x y:
+  sep = match sep:
+    None: ""
+    Some x: x
+  x ^ sep ^ y
+
+concat ?(sep="") x y:
+  x ^ sep ^ y
+
+// Explicitly passing Option
+x = concat ~sep=":" "foo" "bar"
+x = concat ?sep=(Some ":") "foo" "bar"
+
+y = concat "foo" "bar"
+y = concat ?sep=None "foo" "bar"
+
+uppercase_concat ?(sep="") a b:
+  concat ~sep (String.uppercase a) b
+
+uppercase_concat ?sep a b:
+  concat ?sep (String.uppercase a) b
+
+// Optional arguments and higher-order functions
+numeric_deriv ~delta ~x ~y ~(f :: x::float -> y::float -> float):
+  x' = x +. delta
+  y' = y +. delta
+  base = f ~x ~y
+  dx = (f ~x=x' ~y -. base) /. delta
+  dy = (f ~x ~y=y' -. base) /. delta
+  (dx, dy)
+
+// Optional arguments and partial application
+colon_concat = concat ~sep=":"
+
+prepend_pound = concat "# " // optional argument erased
