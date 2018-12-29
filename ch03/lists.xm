@@ -90,3 +90,10 @@ let:
   test2 = Bench.Test.create ~name="sum" f
   where:  f = function (): ignore (sum numbers)
 run_bench [test1, test2]
+
+// Detecting Errors
+
+recursive: drop_zero l:
+  match l:
+    []:  []
+    0 & tail:  drop_zero tail
