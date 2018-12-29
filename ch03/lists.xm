@@ -43,3 +43,33 @@ recursive: drop_zero l:
     []:  []
     0 & tail:  drop_zero tail
     head & tail:  head & drop_zero tail
+
+// Performance
+
+plus_one_match x:
+  match x:
+    0:  1
+    1:  2
+    2:  3
+    _:  x + 1
+
+plus_one_cond x:
+  cond:
+    x == 0:  1
+    x == 1:  2
+    x == 2:  3
+    else:  x + 1
+
+open Core_bench.Std
+
+run_bench tests:
+  display = Textutils.Ascii_table.Display.column_titles
+  Bench.bench ~ascii_table=true ~display tests
+
+test1 = Bench.Test.create ~name="plus_one_match" f
+where:  f = function (): ignore (plus_one_match 10)
+
+test2 = Bench.Test.create ~name="plus_one_cond" f
+where:  f = function (): ignore (plus_one_cond 10)
+
+run_bench [test1, test2]
