@@ -73,3 +73,20 @@ test2 = Bench.Test.create ~name="plus_one_cond" f
 where:  f = function (): ignore (plus_one_cond 10)
 
 run_bench [test1, test2]
+
+// alternatively
+
+recursive: sum_if l:
+  cond:
+    List.is_empty l:  0
+    else:  List.hd_exn l + sum_if (List.tl_exn l)
+
+let:
+  numbers = List.range 0 1000
+
+  test1 = Bench.Test.create ~name="sum_if" f
+  where:  f = function (): ignore (sum_if numbers)
+
+  test2 = Bench.Test.create ~name="sum" f
+  where:  f = function (): ignore (sum numbers)
+run_bench [test1, test2]
